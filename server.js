@@ -8,12 +8,12 @@ app.get('/', (req, res) => {
 });
 
 app.get('/api/:date?', (req, res) => {
-  let dateParam = req.params.date;
-  let date;
+  const { date: dateParam } = req.params;
 
+  let date;
   if (!dateParam) {
     date = new Date();
-  } else if (!isNaN(dateParam)) {
+  } else if (/^\d+$/.test(dateParam)) {
     date = new Date(parseInt(dateParam));
   } else {
     date = new Date(dateParam);
@@ -25,7 +25,7 @@ app.get('/api/:date?', (req, res) => {
 
   res.json({
     unix: date.getTime(),
-    utc: date.toUTCString()
+    utc: date.toUTCString(),
   });
 });
 
