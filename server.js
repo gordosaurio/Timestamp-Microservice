@@ -8,24 +8,24 @@ app.get('/', (req, res) => {
 });
 
 app.get('/api/:date?', (req, res) => {
-  let date = req.params.date;
-  let parsedDate;
+  let dateParam = req.params.date;
+  let date;
 
-  if (!date) {
-    parsedDate = new Date();
-  } else if (!isNaN(date)) {
-    parsedDate = new Date(parseInt(date));
+  if (!dateParam) {
+    date = new Date();
+  } else if (!isNaN(dateParam)) {
+    date = new Date(parseInt(dateParam));
   } else {
-    parsedDate = new Date(date);
+    date = new Date(dateParam);
   }
 
-  if (parsedDate.toString() === 'Invalid Date') {
+  if (date.toString() === 'Invalid Date') {
     return res.json({ error: 'Invalid Date' });
   }
 
   res.json({
-    unix: parsedDate.getTime(),
-    utc: parsedDate.toUTCString()
+    unix: date.getTime(),
+    utc: date.toUTCString()
   });
 });
 
